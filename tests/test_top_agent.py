@@ -21,14 +21,17 @@ logger = get_logger(__name__)
 
 
 args_dict = {
-    "provider": "vertexanthropic",
-    "model": "claude-3-7-sonnet@20250219",
+    #"provider": "vertexanthropic",
+    "provider": "openrouter",
+    "model": "xiaomi/mimo-v2-flash:free",
+    #"model": "openai/gpt-oss-120b:free",
+    #"model": "claude-3-7-sonnet@20250219",
     # "model": "gemini-2.0-flash-001",
     # "model": "claude-3-7-sonnet-20250219",
     # "model": "gpt-4o-2024-08-06",
     # "filter_instance": "^(Prob070_ece241_2013_q2|Prob151_review2015_fsm)$",
     "filter_instance": "^(Prob011_norgate)$",
-    # "filter_instance": "^(.*)$",
+    #"filter_instance": "^(.*)$",
     "type_benchmark": "verilog_eval_v2",
     "path_benchmark": "./verilog-eval",
     "run_identifier": "your_run_identifier",

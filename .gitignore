@@ -12,3 +12,8 @@ data/
 *.vvp
 dist/
 build/
+.venv/
+.vscode/
+iverilog/
+OpenRouterTest/
+.github/

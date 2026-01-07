@@ -1,11 +1,15 @@
 import os
 
+from llama_index.core.llms import ChatMessage
 import config
 from google.oauth2 import service_account
+from llama_index.llms.openrouter import OpenRouter
+from llama_index.llms.openai_like import OpenAILike
 from llama_index.core.llms.llm import LLM
 from llama_index.llms.anthropic import Anthropic
 from llama_index.llms.openai import OpenAI
 from llama_index.llms.vertex import Vertex
+from llama_index.core.base.llms.types import LLMMetadata
 from pydantic import BaseModel
 
 from .log_utils import get_logger
@@ -60,6 +64,20 @@ def get_llm(**kwargs) -> LLM:
 
         except Exception as e:
             raise Exception(f"gen_config: Failed to get {provider} LLM") from e
+    elif kwargs["provider"] == "openrouter":
+        logger.info(
+            "Using OpenRouter LLM via llama-index OpenRouter wrapper"
+        )
+        try:
+            llm: LLM = OpenAILike(
+                model=kwargs["model"],  # e.g. "deepseek/deepseek-chat"
+                api_key=cfg["OPENROUTER_API_KEY"],
+                api_base=cfg["OPENAI_API_BASE_URL"],
+                max_tokens=kwargs["max_token"],
+                is_chat_model=True,
+            )
+        except Exception as e:
+            raise Exception(f"gen_config: Failed to get {provider} LLM") from e    
     elif kwargs["provider"] == "vertex":
         logger.warning(
             "Support of Vertex Gemini LLMs is still in experimental stage, use with caution"
@@ -107,7 +125,8 @@ def get_llm(**kwargs) -> LLM:
         raise ValueError(f"gen_config: Invalid provider: {provider}")
 
     try:
-        _ = llm.complete("Say 'Hi'")
+        #_ = llm.complete("Say 'Hi'")
+        _ = llm.chat([ChatMessage(role="user", content="Say 'Hi'")])
     except Exception as e:
         raise Exception(
             f"gen_config: Failed to complete LLM chat for {provider}"

@@ -123,7 +123,11 @@ class TokenCounter:
         self.enable_reformat_json = isinstance(llm, Vertex)
         model = llm.metadata.model_name
         if isinstance(llm, OpenAI):
-            self.encoding = tiktoken.encoding_for_model(model)
+            try:
+                self.encoding = tiktoken.encoding_for_model(model)
+            except KeyError:
+                # OpenRouter / non-official model names
+                self.encoding = tiktoken.get_encoding("cl100k_base")                
         elif isinstance(llm, Anthropic):
             self.encoding = llm.tokenizer
         elif isinstance(llm, Vertex):
