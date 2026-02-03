@@ -23,8 +23,8 @@ logger = get_logger(__name__)
 args_dict = {
     #"provider": "vertexanthropic",
     "provider": "openrouter",
-    "model": "xiaomi/mimo-v2-flash:free",
-    #"model": "openai/gpt-oss-120b:free",
+    #"model": "stepfun/step-3.5-flash:free",
+    "model": "openai/gpt-oss-120b:free",
     #"model": "claude-3-7-sonnet@20250219",
     # "model": "gemini-2.0-flash-001",
     # "model": "claude-3-7-sonnet-20250219",

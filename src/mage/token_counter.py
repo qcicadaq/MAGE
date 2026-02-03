@@ -189,7 +189,9 @@ class TokenCounter:
         response = llm.chat(
             messages, top_p=settings.top_p, temperature=settings.temperature
         )
-        out_token_cnt = self.count(response.message.content)
+        # Handle case where content might be None
+        content = response.message.content or ""
+        out_token_cnt = self.count(content)
         token_cnt = TokenCount(in_token_cnt=in_token_cnt, out_token_cnt=out_token_cnt)
         self.token_cnts[self.cur_tag].append(token_cnt)
         if self.enable_reformat_json:
