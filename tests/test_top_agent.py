@@ -70,7 +70,7 @@ def run_round(args: argparse.Namespace, llm: LLM):
     agent.set_output_path(f"./output_{args.run_identifier}")
     agent.set_log_path(f"./log_{args.run_identifier}")
     agent.set_redirect_log(True)
-    # agent.set_ablation(True)
+
     record_file = f"./output_{args.run_identifier}/record.json"
     record_json: Dict[str, Dict[str, Any]] = {"record_per_run": {}, "total_record": {}}
 
